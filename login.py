@@ -4,6 +4,8 @@ from PyQt5.QtGui import QFont, QPixmap, QCursor
 from PyQt5 import QtGui, QtCore, QtWidgets
 from PyQt5 import uic
 import notify
+from PyQt5.QtCore import QTimer
+import socket
 
 # Landing page
 class landingPage(QMainWindow):
@@ -15,9 +17,13 @@ class landingPage(QMainWindow):
 
     def chat_function(self):
         # send notification to the workers
-        patient = notify.Patient("localhost", 55556)
+        patient = notify.Patient("localhost", 12346)
         patient.notify_workers()
         patient.close()
+        create_waiting_widget = chatWaitingWidget()
+        widget.addWidget(create_waiting_widget)
+        widget.setCurrentIndex(widget.currentIndex()+1)
+
 
     def login_function(self):
         create_login_page = loginPage()
@@ -29,8 +35,21 @@ class loginPage(QMainWindow):
     def __init__(self):
         super(loginPage, self).__init__()
         uic.loadUi("./UI/login_page.ui", self)
+        self.verification_message.setHidden(True)
         self.back_button.clicked.connect(self.back_function)
-        self.login.clicked.connect(self.staff_page_function)
+        self.UN = self.username.text()
+        self.PASS = self.password.text()
+        self.username.installEventFilter(self)
+        self.password.installEventFilter(self)
+        # self.login.clicked.connect(self.staff_page_function)
+        self.login.clicked.connect(self.verification)
+
+    def eventFilter(self, obj, event):
+        if event.type() == QtCore.QEvent.KeyPress and (obj is self.username or self.password):
+            if event.key() == QtCore.Qt.Key_Return and (self.username.hasFocus() or self.password.hasFocus()):
+                self.verification()
+                pass
+        return False
 
     def back_function(self):
         widget.setCurrentIndex(widget.currentIndex()-1)
@@ -40,15 +59,123 @@ class loginPage(QMainWindow):
         widget.addWidget(create_staff_page)
         widget.setCurrentIndex(widget.currentIndex()+1)
 
+    def verification(self):
+        username = self.username.text()
+        password = self.password.text()
+        if username != "admin" or password != "admin":
+            self.verification_message.setHidden(False)
+        else:
+            self.login.clicked.connect(self.staff_page_function)
+            pass
+
 # staff page
 class staffPage(QMainWindow):
     def __init__(self):
         super(staffPage, self).__init__()
         uic.loadUi("./UI/staff_page.ui", self)
-        self.patient_waiting_number.setText(str(0))
+        self.worker = notify.Worker("localhost", 12346)
+        self.worker.start()
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.updateChatRequest)
+        self.timer.start(2000)  # 1000 ms = 1 second
+
+    def updateChatRequest(self):
+
+        if self.worker.notification_flag == 1:
+            self.patient_waiting_number.setText(str(1))
+
+class ChatThread(QtCore.QThread):
+    messageReceived = QtCore.pyqtSignal(str)
+    def run(self):
+        while True:
+            message = self.receive_message_from_server()
+            self.messageReceived.emit(message)
+
+    def receive_message_from_server(self):
+        # This is a placeholder function that simulates receiving a message from a server
+        return "Server: Hello, how are you?"
+
+
+class chatPage(QMainWindow):
+    def __init__(self):
+        super(chatPage, self).__init__()
+        uic.loadUi("./UI/chat_page.ui", self)
+        self.input_box.returnPressed.connect(self.sendMessage)
+        self.send_button.clicked.connect(self.sendMessage)
+        self.chat_thread = ChatThread()
+        self.chat_thread.messageReceived.connect(self.displayMessage)
+        self.chat_thread.start()
+
+class chatWaitingWidget(QWidget):
+    def __init__(self):
+        super(chatWaitingWidget, self).__init__()
+        uic.loadUi("./UI/chat_wait_widget.ui", self)
+        # self.connecting_label.setText(str(0))
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.updateLabel)
+        self.timer.start(1000)  # 1000 ms = 1 second
+        self.text_variation = 0
+        self.cancel_button.clicked.connect(self.back_function)
+
+    def back_function(self):
+        widget.setCurrentIndex(widget.currentIndex() - 1)
+    def updateLabel(self):
+        if self.text_variation % 3 == 0:
+            self.label.setText("Connecting to the chat, Please wait.")
+        if self.text_variation % 3 == 1:
+            self.label.setText("Connecting to the chat, Please wait..")
+        if self.text_variation % 3 == 2:
+            self.label.setText("Connecting to the chat, Please wait...")
+        self.text_variation = (self.text_variation + 1) % 3
 
 
 
+
+
+class ChatThread(QtCore.QThread):
+    messageReceived = QtCore.pyqtSignal(str)
+
+    def __init__(self, host='127.0.0.1', port=12346):
+        super(ChatThread, self).__init__()
+        self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.s.connect((host, port))
+
+    def run(self):
+        while True:
+            message = self.receive_message_from_server()
+            self.messageReceived.emit(message)
+
+    def send_message_to_server(self, message):
+        self.s.send(bytes(message, 'utf-8'))
+
+    def receive_message_from_server(self):
+        data = self.s.recv(1024)
+        return data.decode()
+
+
+class chatPage(QMainWindow):
+    def __init__(self):
+        super(chatPage, self).__init__()
+        uic.loadUi("../UI/chat_page.ui", self)
+        self.input_box.installEventFilter(self)
+        self.send_button.clicked.connect(self.sendMessage)
+        self.chat_thread = ChatThread()
+        self.chat_thread.messageReceived.connect(self.displayMessage)
+        self.chat_thread.start()
+
+    def eventFilter(self, obj, event):
+        if event.type() == QtCore.QEvent.KeyPress and obj is self.input_box:
+            if event.key() == QtCore.Qt.Key_Return and self.input_box.hasFocus():
+                self.sendMessage()
+        return False
+
+    def sendMessage(self):
+        message = self.input_box.toPlainText()
+        self.chat_thread.send_message_to_server(message)
+        self.input_box.clear()
+
+    def displayMessage(self, message):
+        self.output_box.append(message)
 
 app = QApplication(sys.argv)
 landing_page = landingPage()
