@@ -14,6 +14,7 @@ class landingPage(QMainWindow):
         uic.loadUi("./UI/first_page.ui", self)
         self.chat.clicked.connect(self.chat_function)
         self.staff_login.clicked.connect(self.login_function)
+        self.information.clicked.connect(self.information_function)
 
     def chat_function(self):
         # send notification to the workers
@@ -28,6 +29,11 @@ class landingPage(QMainWindow):
     def login_function(self):
         create_login_page = loginPage()
         widget.addWidget(create_login_page)
+        widget.setCurrentIndex(widget.currentIndex()+1)
+
+    def information_function(self):
+        create_information_page = informationPage()
+        widget.addWidget(create_information_page)
         widget.setCurrentIndex(widget.currentIndex()+1)
 
 # Login page
@@ -52,7 +58,7 @@ class loginPage(QMainWindow):
         return False
 
     def back_function(self):
-        widget.setCurrentIndex(widget.currentIndex()-1)
+        widget.removeWidget(widget.currentWidget())
 
     def staff_page_function(self):
         create_staff_page = staffPage()
@@ -118,7 +124,7 @@ class chatWaitingWidget(QWidget):
         self.cancel_button.clicked.connect(self.back_function)
 
     def back_function(self):
-        widget.setCurrentIndex(widget.currentIndex() - 1)
+        widget.removeWidget(widget.currentWidget())
     def updateLabel(self):
         if self.text_variation % 3 == 0:
             self.label.setText("Connecting to the chat, Please wait.")
@@ -156,7 +162,7 @@ class ChatThread(QtCore.QThread):
 class chatPage(QMainWindow):
     def __init__(self):
         super(chatPage, self).__init__()
-        uic.loadUi("../UI/chat_page.ui", self)
+        uic.loadUi("./UI/chat_page.ui", self)
         self.input_box.installEventFilter(self)
         self.send_button.clicked.connect(self.sendMessage)
         self.chat_thread = ChatThread()
@@ -176,6 +182,34 @@ class chatPage(QMainWindow):
 
     def displayMessage(self, message):
         self.output_box.append(message)
+
+# information page
+class informationPage(QMainWindow):
+    def __init__(self):
+        super(informationPage, self).__init__()
+        uic.loadUi("./UI/information_page.ui", self)
+        self.map_button.clicked.connect(self.map_page_function)
+        self.back_button.clicked.connect(self.back_function)
+
+    def map_page_function(self):
+        create_map_page = mapPage()
+        widget.addWidget(create_map_page)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def back_function(self):
+        widget.removeWidget(widget.currentWidget())
+
+# map page
+class mapPage(QMainWindow):
+    def __init__(self):
+        super(mapPage, self).__init__()
+        uic.loadUi("./UI/map_page.ui", self)
+        self.back_button.clicked.connect(self.back_function)
+
+    def back_function(self):
+        widget.removeWidget(widget.currentWidget())
+
+
 
 app = QApplication(sys.argv)
 landing_page = landingPage()
