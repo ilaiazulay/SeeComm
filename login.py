@@ -84,11 +84,18 @@ class staffPage(QMainWindow):
         self.timer = QTimer()
         self.timer.timeout.connect(self.updateChatRequest)
         self.timer.start(2000)  # 1000 ms = 1 second
+        self.answer.clicked.connect(self.enterChat)
 
     def updateChatRequest(self):
 
         if self.worker.notification_flag == 1:
             self.patient_waiting_number.setText(str(1))
+            self.answer.clicked.connect(self.enterChat)
+
+    def enterChat(self):
+        create_stuff_member_chat_page = stuffMemberChatPage()
+        widget.addWidget(create_stuff_member_chat_page)
+        widget.setCurrentIndex(widget.currentIndex()+1)
 
 class ChatThread(QtCore.QThread):
     messageReceived = QtCore.pyqtSignal(str)
@@ -133,20 +140,25 @@ class chatWaitingWidget(QWidget):
         if self.text_variation % 3 == 2:
             self.label.setText("Connecting to the chat, Please wait...")
         self.text_variation = (self.text_variation + 1) % 3
-
-
-
+        # check if staff member entered the chat
+        message = self.chat_thread.receive_message_from_server()
+        if message == "Connected staff member":
+            create_patient_chat_page = patientChatPage()
+            widget.addWidget(create_patient_chat_page)
+            widget.setCurrentIndex(widget.currentIndex()+1)
 
 
 class ChatThread(QtCore.QThread):
     messageReceived = QtCore.pyqtSignal(str)
 
-    def __init__(self, host='127.0.0.1', port=12346):
+    def __init__(self, host='127.0.0.1', port=12347, role="patient"):
         super(ChatThread, self).__init__()
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.s.connect((host, port))
+        self.role = role
 
     def run(self):
+        self.send_message_to_server(self.role)  # send client role to server
         while True:
             message = self.receive_message_from_server()
             self.messageReceived.emit(message)
@@ -159,13 +171,13 @@ class ChatThread(QtCore.QThread):
         return data.decode()
 
 
-class chatPage(QMainWindow):
+class patientChatPage(QMainWindow):
     def __init__(self):
-        super(chatPage, self).__init__()
+        super(patientChatPage, self).__init__()
         uic.loadUi("./UI/chat_page.ui", self)
         self.input_box.installEventFilter(self)
         self.send_button.clicked.connect(self.sendMessage)
-        self.chat_thread = ChatThread()
+        self.chat_thread = ChatThread(role="patient")  # pass client role
         self.chat_thread.messageReceived.connect(self.displayMessage)
         self.chat_thread.start()
 
@@ -181,7 +193,38 @@ class chatPage(QMainWindow):
         self.input_box.clear()
 
     def displayMessage(self, message):
-        self.output_box.append(message)
+        role, message = message.split(" : ")
+        if role == self.chat_thread.role:
+            message = "you: " + message
+        self.output_box.insertPlainText(message + '\n')
+
+
+class stuffMemberChatPage(QMainWindow):
+    def __init__(self):
+        super(stuffMemberChatPage, self).__init__()
+        uic.loadUi("./UI/chat_page.ui", self)
+        self.input_box.installEventFilter(self)
+        self.send_button.clicked.connect(self.sendMessage)
+        self.chat_thread = ChatThread(role="stuff")  # pass client role
+        self.chat_thread.messageReceived.connect(self.displayMessage)
+        self.chat_thread.start()
+
+    def eventFilter(self, obj, event):
+        if event.type() == QtCore.QEvent.KeyPress and obj is self.input_box:
+            if event.key() == QtCore.Qt.Key_Return and self.input_box.hasFocus():
+                self.sendMessage()
+        return False
+
+    def sendMessage(self):
+        message = self.input_box.toPlainText()
+        self.chat_thread.send_message_to_server(message)
+        self.input_box.clear()
+
+    def displayMessage(self, message):
+        role, message = message.split(" : ")
+        if role == self.chat_thread.role:
+            message = "you: " + message
+        self.output_box.insertPlainText(message + '\n')
 
 # information page
 class informationPage(QMainWindow):
