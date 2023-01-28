@@ -1,21 +1,21 @@
 import socket
 import threading
 
-class Patient:
+class notifier:
     def __init__(self, host, port):
         self.host = host
         self.port = port
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.client.connect((self.host, self.port))
 
-    def notify_workers(self):
+    def notify(self):
         self.client.send("Patient needs assistance!".encode())
         print("Notified workers.")
 
     def close(self):
         self.client.close()
 
-class Worker:
+class notified:
     def __init__(self, host, port):
         self.host = host
         self.port = port
@@ -25,10 +25,10 @@ class Worker:
         self.notification_flag = 0
 
     def start(self):
-        worker_thread = threading.Thread(target=self.work)
+        worker_thread = threading.Thread(target=self.listen)
         worker_thread.start()
 
-    def work(self):
+    def listen(self):
         while True:
             client_socket, client_address = self.server.accept()
             notification = client_socket.recv(1024).decode()
@@ -38,11 +38,11 @@ class Worker:
             client_socket.close()
 
 if __name__ == "__main__":
-    worker = Worker("localhost", 55555)
+    worker = notified("localhost", 55555)
     worker.start()
 
     # Patient can notify the workers by creating an instance of the Patient class
     # and calling the notify_workers method
-    patient = Patient("localhost", 55555)
-    patient.notify_workers()
+    patient = notifier("localhost", 55555)
+    patient.notify()
     patient.close()

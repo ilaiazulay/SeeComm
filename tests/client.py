@@ -1,18 +1,10 @@
 import socket
-import threading
-import tkinter
-import tkinter.scrolledtext
-from tkinter import simpledialog
 
-HOST = '127.0.0.1'
-PORT = 9090
+soc = socket.socket()
+soc.connect(('localhost', 12333))
+while True:
+    mess = input(":: ")
+    soc.send(bytes(mess, 'utf-8'))
+    print(soc.recv(1024).decode())
 
-class Client:
-
-    def __init__(self, host, port):
-
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.sock.connect((host, port))
-
-        self.gui_done = False
-        self.running = True
+soc.close()
