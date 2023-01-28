@@ -232,11 +232,17 @@ class informationPage(QMainWindow):
         super(informationPage, self).__init__()
         uic.loadUi("./UI/information_page.ui", self)
         self.map_button.clicked.connect(self.map_page_function)
+        self.appointments_button.clicked.connect(self.appointments_page_function)
         self.back_button.clicked.connect(self.back_function)
 
     def map_page_function(self):
         create_map_page = mapPage()
         widget.addWidget(create_map_page)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def appointments_page_function(self):
+        create_appointments_page = appointmentsPage()
+        widget.addWidget(create_appointments_page)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
     def back_function(self):
@@ -251,6 +257,26 @@ class mapPage(QMainWindow):
 
     def back_function(self):
         widget.removeWidget(widget.currentWidget())
+
+# appointments page
+class appointmentsPage(QMainWindow):
+    def __init__(self):
+        super(appointmentsPage, self).__init__()
+        uic.loadUi("./UI/appointments_page.ui", self)
+        self.back_button.clicked.connect(self.back_function)
+        self.chat.clicked.connect(self.chat_function)
+
+    def back_function(self):
+        widget.removeWidget(widget.currentWidget())
+
+    def chat_function(self):
+        # send notification to the workers
+        patient = notify.Patient("localhost", 12346)
+        patient.notify_workers()
+        patient.close()
+        create_waiting_widget = chatWaitingWidget()
+        widget.addWidget(create_waiting_widget)
+        widget.setCurrentIndex(widget.currentIndex()+1)
 
 
 
