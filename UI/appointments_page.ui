@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>970</width>
+    <height>755</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="3" column="0">
+     <widget class="QPushButton" name="back_button">
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">#back_button {
+	width: 100px;
+	height: 36px;
+	border-radius: 9px;
+	background-color: 'white';
+	margin-left:16%
+}
+
+#back_button:hover {
+	background-color: #F8F8FF;
+}</string>
+      </property>
+      <property name="text">
+       <string>&lt; Back</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1" alignment="Qt::AlignVCenter">
+     <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">margin-left: 60px;
+margin-top: 9px</string>
+      </property>
+      <property name="lineWidth">
+       <number>1</number>
+      </property>
+      <property name="midLineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>Appointments</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QLabel" name="label_2">
+      <property name="minimumSize">
+       <size>
+        <width>260</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">width: 260px;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>329</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="0" column="0" alignment="Qt::AlignTop">
+     <widget class="QLabel" name="title">
+      <property name="font">
+       <font>
+        <family>Segoe Script</family>
+        <pointsize>16</pointsize>
+        <italic>false</italic>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">margin-left: 16%</string>
+      </property>
+      <property name="text">
+       <string>SeeComm</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <layout class="QFormLayout" name="formLayout">
+      <property name="horizontalSpacing">
+       <number>20</number>
+      </property>
+      <property name="verticalSpacing">
+       <number>36</number>
+      </property>
+      <property name="topMargin">
+       <number>11</number>
+      </property>
+      <property name="bottomMargin">
+       <number>160</number>
+      </property>
+      <item row="1" column="0">
+       <widget class="QLabel" name="fullNameLabel">
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Full Name:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="name">
+        <property name="styleSheet">
+         <string notr="true">width: 200px;
+height: 36px;
+border-radius: 9px;
+background-color: 'white';
+border: 1px solid;
+border-color: rgb(190, 190, 190);</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="phoneNumberLabel">
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Phone Number:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="phone_number">
+        <property name="styleSheet">
+         <string notr="true">width: 200px;
+height: 36px;
+border-radius: 9px;
+background-color: 'white';
+border: 1px solid;
+border-color: rgb(190, 190, 190);</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="iDLabel">
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>ID:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="id">
+        <property name="styleSheet">
+         <string notr="true">width: 200px;
+height: 36px;
+border-radius: 9px;
+background-color: 'white';
+border: 1px solid;
+border-color: rgb(190, 190, 190);</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="typeOfAppointmentLabel">
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Type of Appointment:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="dateLabel">
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Date:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QComboBox" name="appointment_type">
+        <property name="styleSheet">
+         <string notr="true">width: 200px;
+height: 36px;
+border-radius: 9px;
+background-color: 'white';
+border: 1px solid;
+border-color: rgb(190, 190, 190);</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>Children's allergy, immunology and lung clinic</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Memory Clinic</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Oncology clinic</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Aesthetics clinic</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Day clinic for adults</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Children's clinics</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Oral and Maxillofacial Clinic</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Mental health clinic</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Nephrology clinic</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Male fertility clinic</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Rheumatology clinic</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Dental clinic</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Allergy Institute</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Hematology Institute</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Genetics Institute</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Children's Gastro Institute</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Child Development Institute</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Posture and Hearing Institute</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Sleep Lab Institute</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Physiotherapy Institute</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Pathology Institute</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>IVF Institute</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QDateEdit" name="date">
+        <property name="styleSheet">
+         <string notr="true">width: 200px;
+height: 36px;
+border-radius: 9px;
+background-color: 'white';
+border: 1px solid;
+border-color: rgb(190, 190, 190);</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="3" column="2">
+     <widget class="QPushButton" name="chat">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <family>MS Shell Dlg 2</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">#chat{
+	width: 100px;
+	height: 36px;
+	border-radius: 9px;
+	background-color: 'white';
+	margin-left: 56%;
+}
+#chat:hover {
+	background-color: #F8F8FF;
+}</string>
+      </property>
+      <property name="text">
+       <string>Start Chat &gt;</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>970</width>
+     <height>26</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

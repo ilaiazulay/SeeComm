@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtWidgets import *
-from PyQt5.QtGui import QFont, QPixmap, QCursor
+from PyQt5.QtGui import QFont, QPixmap, QCursor, QImage, QPainter
 from PyQt5 import QtGui, QtCore, QtWidgets
 from PyQt5 import uic
 import notify
@@ -23,7 +23,7 @@ class landingPage(QMainWindow):
     def chat_function(self):
         # send notification to the workers
         try:
-            patient = notify.notifier("localhost", 12346)
+            patient = notify.notifier("localhost", 55555)
             patient.notify()
             patient.close()
             create_waiting_widget = chatWaitingWidget()
@@ -86,24 +86,37 @@ class staffPage(QMainWindow):
     def __init__(self):
         super(staffPage, self).__init__()
         uic.loadUi("./UI/staff_page.ui", self)
-        self.worker = notify.notified("localhost", 12346)
-        self.worker.start()
+        try:
+            self.worker = notify.notified("localhost", 55555)
+            self.worker.start()
+        except:
+            print("notify error")
         self.timer = QTimer()
         self.timer.timeout.connect(self.updateChatRequest)
         self.timer.start(2000)  # 1000 ms = 1 second
+        self.logout.clicked.connect(self.logout_function)
 
     def updateChatRequest(self):
+        try:
+            if self.worker.notification_flag == 1:
+                self.patient_waiting_number.setText(str(1))
+                self.answer.clicked.connect(self.enterChat)
+                self.worker.notification_flag = 0
+        except:
+            print("notify error")
 
-        if self.worker.notification_flag == 1:
-            self.patient_waiting_number.setText(str(1))
-            self.answer.clicked.connect(self.enterChat)
-            self.worker.notification_flag = 0
 
     def enterChat(self):
+        try:
             worker = notify.notifier("localhost", 12348)
             worker.notify()
             worker.close()
             ChatPage('127.0.0.2', 9090, 'stuff_member')
+        except:
+            print("notify error")
+
+    def logout_function(self):
+        widget.removeWidget(widget.currentWidget())
 
 
 class ChatThread(QtCore.QThread):
@@ -129,10 +142,13 @@ class chatPage(QMainWindow):
         self.chat_thread.start()
 
 class chatWaitingWidget(QWidget):
-    def __init__(self):
+    def __init__(self, name='', id=0, phone_number=0, appointment_type='', date=''):
         super(chatWaitingWidget, self).__init__()
         uic.loadUi("./UI/chat_wait_widget.ui", self)
         # self.connecting_label.setText(str(0))
+        self.name = name
+        self.id = id
+        self.info = [name, id, phone_number, appointment_type, date]
         self.patient = notify.notified("localhost", 12348)
         self.patient.start()
         self.timer = QTimer()
@@ -152,8 +168,11 @@ class chatWaitingWidget(QWidget):
             self.label.setText("Connecting to the chat, Please wait...")
         self.text_variation = (self.text_variation + 1) % 3
         if self.patient.notification_flag == 1:
-            ChatPage('127.0.0.2', 9090, 'patient')
+            self.timer.start(1000)
+            chat_page = ChatPage('127.0.0.2', 9090, 'patient')
             self.patient.notification_flag = 0
+            if self.name != '' and self.id != 0:
+                chat_page.sendInfo(self.info)
 
 class ChatPage:
     def __init__(self, host, port, nickname):
@@ -198,6 +217,17 @@ class ChatPage:
         self.sock.send(message.encode('utf-8'))
         self.input_area.delete('1.0', 'end')
 
+    def sendInfo(self, info):
+        name = info[0]
+        id = info[1]
+        phone_number = info[2]
+        appointment_type = info[3]
+        date = info[4]
+        message = f"name: {name}, id: {id}, phone number: {phone_number}, appointment: {appointment_type}, date: {date}"
+        self.sock.send(message.encode('utf-8'))
+
+
+
     def stop(self):
         self.running = False
         self.win.destroy()
@@ -229,25 +259,87 @@ class informationPage(QMainWindow):
         super(informationPage, self).__init__()
         uic.loadUi("./UI/information_page.ui", self)
         self.map_button.clicked.connect(self.map_page_function)
+        self.appointments_button.clicked.connect(self.appointments_page_function)
         self.back_button.clicked.connect(self.back_function)
 
     def map_page_function(self):
-        create_map_page = mapPage()
-        widget.addWidget(create_map_page)
+        create_buildings_page = buildingsPage()
+        widget.addWidget(create_buildings_page)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def appointments_page_function(self):
+        create_appointments_page = appointmentsPage()
+        widget.addWidget(create_appointments_page)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
     def back_function(self):
         widget.removeWidget(widget.currentWidget())
 
+class buildingsPage(QMainWindow):
+    def __init__(self):
+        super(buildingsPage, self).__init__()
+        uic.loadUi("./UI/buildings_page.ui", self)
+        self.back_button.clicked.connect(self.back_function)
+        self.building_124.clicked.connect(self.building_124_function)
+        self.building_126.clicked.connect(self.building_126_function)
+
+
+    def building_124_function(self):
+        create_map_page = mapPage("./more/building124.png", "<b>Building 124</b>", "<b>Departments</b><br><br>אף אוזן גרון<br>כירוגיה פלסטית<br>'אורתופדיה א' + ב<br>נוירולוגיה<br>האף הדנטלי / מרפאת שיניים")
+        widget.addWidget(create_map_page)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def building_126_function(self):
+        create_map_page = mapPage("./more/building126.png", "<b>Building 126</>", "<b>Departments</b><br><br>דימות<br>מכונים ומעבדות<br>גנטיקה<br>המטולוגיה")
+        widget.addWidget(create_map_page)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+    def back_function(self):
+        widget.removeWidget(widget.currentWidget())
+
 # map page
 class mapPage(QMainWindow):
-    def __init__(self):
+    def __init__(self, location, label, department):
         super(mapPage, self).__init__()
         uic.loadUi("./UI/map_page.ui", self)
         self.back_button.clicked.connect(self.back_function)
+        self.label.setText(label)
+        self.label_3.setText(department)
+        pix = QPixmap(location)
+        item = QtWidgets.QGraphicsPixmapItem(pix)
+        scene = QtWidgets.QGraphicsScene(0, 0, 1030, 782)
+        scene.addItem(item)
+        self.graphicsView.setScene(scene)
 
     def back_function(self):
         widget.removeWidget(widget.currentWidget())
+
+class appointmentsPage(QMainWindow):
+    def __init__(self):
+        super(appointmentsPage, self).__init__()
+        uic.loadUi("./UI/appointments_page.ui", self)
+        self.back_button.clicked.connect(self.back_function)
+        self.chat.clicked.connect(self.chat_function)
+
+    def back_function(self):
+        widget.removeWidget(widget.currentWidget())
+
+    def chat_function(self):
+        # send notification to the workers
+        name = self.name.text()
+        id = self.id.text()
+        phone_number = self.phone_number.text()
+        appointment_type = self.appointment_type.currentText()
+        date = self.date.date().toString("dd.MM.yyyy")
+        print(date)
+        try:
+            patient = notify.notifier("localhost", 55555)
+            patient.notify()
+            patient.close()
+            create_waiting_widget = chatWaitingWidget(name, id, phone_number, appointment_type, date)
+            widget.addWidget(create_waiting_widget)
+            widget.setCurrentIndex(widget.currentIndex()+1)
+        except:
+            print("server down")
 
 
 
