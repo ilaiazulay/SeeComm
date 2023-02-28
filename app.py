@@ -110,15 +110,14 @@ class staffPage(QMainWindow):
         except:
             print("notify error")
 
-
     def enterChat(self):
-        self.worker.notification_flag = 0
         try:
+            self.answer.setEnabled(False)
+            self.worker.notification_flag = 0
+            self.patient_waiting_number.setText(str(self.worker.notification_flag))
             worker = notify.notifier(HOST, 12348)
             worker.notify()
             worker.close()
-            self.worker.notification_flag = 0
-            self.answer.setEnabled(False)
             ChatPage(HOST, 9090, 'stuff_member')
         except:
             print("notify error")
