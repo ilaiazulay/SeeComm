@@ -232,12 +232,23 @@ border-color: rgb(190, 190, 190);</string>
       <item row="4" column="1">
        <widget class="QComboBox" name="appointment_type">
         <property name="styleSheet">
-         <string notr="true">width: 200px;
-height: 36px;
+         <string notr="true">height: 36px;
 border-radius: 9px;
 background-color: 'white';
 border: 1px solid;
 border-color: rgb(190, 190, 190);</string>
+        </property>
+        <property name="insertPolicy">
+         <enum>QComboBox::InsertAtBottom</enum>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>200</width>
+          <height>36</height>
+         </size>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
         </property>
         <item>
          <property name="text">

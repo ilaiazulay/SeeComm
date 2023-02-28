@@ -6,10 +6,13 @@ app = QApplication(sys.argv)
 
 # start the first instance of the program
 process1 = QProcess()
-process1.start("python", ["login.py"]) # or the command that runs your script
+process1.start("python", ["app.py"]) # or the command that runs your script
 
 # start the second instance of the program
 process2 = QProcess()
-process2.start("python", ["login.py"]) # or the command that runs your script
-
+process2.start("python", ["app.py"]) # or the command that runs your script
+with open('./server.py') as server:
+    server = server.read()
+    exec(server)
 app.exec_()
+

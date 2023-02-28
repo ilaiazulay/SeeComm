@@ -4,8 +4,16 @@ import threading
 HOST = '127.0.0.2'
 PORT = 9090
 
+# Get the local IP address of the machine
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+s.connect(("8.8.8.8", 80))
+local_ip = s.getsockname()[0]
+s.close()
+
+print("Local IP address:", local_ip)
+
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind((HOST, PORT))
+server.bind((local_ip, PORT))
 
 server.listen()
 

@@ -35,7 +35,13 @@ class notified:
             if notification == "Patient needs assistance!":
                 print("Received notification from {}: {}".format(client_address, notification))
                 self.notification_flag = 1
+            if notification == "Patient closed the chat!":
+                print("Patient closed the chat {}: {}".format(client_address, notification))
+                self.notification_flag = 0
             client_socket.close()
+
+    def close(self):
+        self.server.close()
 
 if __name__ == "__main__":
     worker = notified("localhost", 55555)
@@ -46,3 +52,8 @@ if __name__ == "__main__":
     patient = notifier("localhost", 55555)
     patient.notify()
     patient.close()
+
+    patient = notifier("localhost", 55555)
+    patient.notify()
+    patient.close()
+
