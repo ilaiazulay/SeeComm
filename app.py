@@ -360,7 +360,7 @@ class buildingsPage(QMainWindow):
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
     def malrad_function(self):
-        create_map_page = mapPage(self.map_selection(self.current_location, "malrad"), "<b>Building 122</b>", "<b>Departments</b><br><br>")
+        create_map_page = mapPage(self.map_selection(self.current_location, "malrad"), "<b>Building 122</b>", "<b>Departments</b><br><br>חדר מיון נמרץ")
         widget.addWidget(create_map_page)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
@@ -370,12 +370,12 @@ class buildingsPage(QMainWindow):
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
     def operations_function(self):
-        create_map_page = mapPage(self.map_selection(self.current_location, "operations"), "<b>Building 125</>", "<b>Departments</b><br><br>")
+        create_map_page = mapPage(self.map_selection(self.current_location, "operations"), "<b>Building 125</>", "<b>Departments</b><br><br>חדרי ניתוח")
         widget.addWidget(create_map_page)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
     def aliza_function(self):
-        create_map_page = mapPage(self.map_selection(self.current_location, "aliza"), "<b>Building 123</>", "<b>Departments</b><br><br>")
+        create_map_page = mapPage(self.map_selection(self.current_location, "aliza"), "<b>Building 123</>", "<b>Departments</b><br><br>פנימית א-ה<br>נפרולוגיה/ דיאליזה<br>כירורגית חזה+כלי דם<br>אורולוגיה<br>כירורגיה א+ב")
         widget.addWidget(create_map_page)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
@@ -385,7 +385,7 @@ class buildingsPage(QMainWindow):
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
     def oncology_function(self):
-        create_map_page = mapPage(self.map_selection(self.current_location, "oncology"), "<b>Building 130</>", "<b>Departments</b><br><br>")
+        create_map_page = mapPage(self.map_selection(self.current_location, "oncology"), "<b>Building 130</>", "<b>Departments</b><br><br>מבוגרים<br>ילדים")
         widget.addWidget(create_map_page)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
