@@ -28,7 +28,7 @@ class landingPage(QMainWindow):
         # send notification to the workers
         try:
             print("here")
-            patient = notify.notifier(HOST, 55555)
+            patient = notify.notifier("localhost", 55555)
             patient.notify()
             patient.close()
             create_waiting_widget = chatWaitingWidget()
@@ -92,7 +92,7 @@ class staffPage(QMainWindow):
         super(staffPage, self).__init__()
         uic.loadUi("./UI/staff_page.ui", self)
         try:
-            self.worker = notify.notified(HOST, 55555)
+            self.worker = notify.notified("localhost", 55555)
             self.worker.start()
         except:
             print("notify error")
@@ -117,7 +117,7 @@ class staffPage(QMainWindow):
             self.answer.setEnabled(False)
             self.worker.notification_flag = 0
             self.patient_waiting_number.setText(str(self.worker.notification_flag))
-            worker = notify.notifier(HOST, 12348)
+            worker = notify.notifier("localhost", 12348)
             worker.notify()
             worker.close()
             ChatPage(HOST, 9090, 'stuff_member')
@@ -158,7 +158,7 @@ class chatWaitingWidget(QWidget):
         self.name = name
         self.id = id
         self.info = [name, id, phone_number, appointment_type, date]
-        self.patient = notify.notified(HOST, 12348)
+        self.patient = notify.notified("localhost", 12348)
         self.patient.start()
         self.timer = QTimer()
         self.timer.timeout.connect(self.updateLabel)
@@ -432,7 +432,7 @@ class appointmentsPage(QMainWindow):
         date = self.date.date().toString("dd.MM.yyyy")
         print(date)
         try:
-            patient = notify.notifier(HOST, 55555)
+            patient = notify.notifier("localhost", 55555)
             patient.notify()
             patient.close()
             create_waiting_widget = chatWaitingWidget(name, id, phone_number, appointment_type, date)
