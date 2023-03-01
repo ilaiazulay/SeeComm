@@ -7,7 +7,8 @@ operations and communication more accessible in the hospitals using information 
 1. [x] Navigation using mapping of patient current location and destination
 2. [x] List of departments in each building
 3. [x] Make an appointment
-4. [x] Chat with a stuff member 
+4. [x] Chat with a stuff member
+The system contains all the data in the files and the server runs on the local network for security reasons
 
  > **Before you start**
 1. [x] Download the code from Git-Hub https://github.com/sufka861/AB-test.git
