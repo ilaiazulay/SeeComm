@@ -5,10 +5,7 @@ HOST = '127.0.0.2'
 PORT = 9090
 
 # Get the local IP address of the machine
-s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-s.connect(("8.8.8.8", 80))
-local_ip = s.getsockname()[0]
-s.close()
+local_ip = socket.gethostbyname(socket.gethostname())
 
 print("Local IP address:", local_ip)
 

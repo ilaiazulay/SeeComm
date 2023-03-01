@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>884</width>
-    <height>600</height>
+    <width>912</width>
+    <height>885</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,11 +15,50 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="4" column="1" alignment="Qt::AlignHCenter">
-     <widget class="QPushButton" name="building_126">
+    <item row="12" column="0">
+     <spacer name="horizontalSpacer_9">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="7" column="0">
+     <spacer name="horizontalSpacer_4">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="6" column="0">
+     <spacer name="horizontalSpacer_3">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="12" column="4">
+     <widget class="QPushButton" name="mall">
       <property name="maximumSize">
        <size>
-        <width>360</width>
+        <width>16777215</width>
         <height>16777215</height>
        </size>
       </property>
@@ -32,7 +71,7 @@
        <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="styleSheet">
-       <string notr="true">#building_126{
+       <string notr="true">#mall{
 	width: 360px;
 	height: 60px;
 	border-radius: 9px;
@@ -40,93 +79,104 @@
 	margin-bottom: 16px;
 	margin-left: 56%;
 }
-#building_126:hover {
+#mall:hover {
 	background-color: #F8F8FF;
 }</string>
       </property>
       <property name="text">
-       <string>בניין 126 / Building 126</string>
+       <string>קניון אסף סנטר</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="title">
+    <item row="4" column="4">
+     <widget class="QPushButton" name="operations">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>16777215</height>
+       </size>
+      </property>
       <property name="font">
        <font>
-        <family>Segoe Script</family>
-        <pointsize>16</pointsize>
-        <italic>false</italic>
+        <pointsize>10</pointsize>
        </font>
       </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
       <property name="styleSheet">
-       <string notr="true">margin-left: 16%</string>
+       <string notr="true">#operations{
+	width: 360px;
+	height: 60px;
+	border-radius: 9px;
+	background-color: 'white';
+	margin-bottom: 16px;
+	margin-left: 56%;
+}
+#operations:hover {
+	background-color: #F8F8FF;
+}</string>
       </property>
       <property name="text">
-       <string>SeeComm</string>
+       <string>חדר ניתוח</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="1">
-     <widget class="QLabel" name="label">
+    <item row="6" column="4">
+     <widget class="QPushButton" name="labs">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>16777215</height>
+       </size>
+      </property>
       <property name="font">
        <font>
-        <pointsize>16</pointsize>
-        <weight>50</weight>
-        <bold>false</bold>
+        <pointsize>10</pointsize>
        </font>
       </property>
-      <property name="layoutDirection">
-       <enum>Qt::LeftToRight</enum>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="styleSheet">
-       <string notr="true">margin-left: 60px;
-margin-top: 9px</string>
+       <string notr="true">#labs{
+	width: 360px;
+	height: 60px;
+	border-radius: 9px;
+	background-color: 'white';
+	margin-bottom: 16px;
+	margin-left: 56%;
+}
+#labs:hover {
+	background-color: #F8F8FF;
+}</string>
       </property>
       <property name="text">
-       <string>Buildings</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
+       <string>מעבדות</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="1">
-     <spacer name="horizontalSpacer">
+    <item row="6" column="9">
+     <spacer name="horizontalSpacer_11">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
       <property name="sizeHint" stdset="0">
        <size>
-        <width>413</width>
+        <width>40</width>
         <height>20</height>
        </size>
       </property>
      </spacer>
     </item>
-    <item row="0" column="2">
-     <widget class="QLabel" name="label_2">
-      <property name="minimumSize">
-       <size>
-        <width>260</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>260</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">width: 260px;</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="1">
-     <spacer name="verticalSpacer_2">
+    <item row="2" column="2" colspan="5">
+     <spacer name="verticalSpacer">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
       </property>
@@ -138,11 +188,11 @@ margin-top: 9px</string>
       </property>
      </spacer>
     </item>
-    <item row="3" column="1" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-     <widget class="QPushButton" name="building_124">
+    <item row="7" column="4">
+     <widget class="QPushButton" name="shamir">
       <property name="maximumSize">
        <size>
-        <width>360</width>
+        <width>16777215</width>
         <height>16777215</height>
        </size>
       </property>
@@ -155,7 +205,7 @@ margin-top: 9px</string>
        <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="styleSheet">
-       <string notr="true">#building_124{
+       <string notr="true">#shamir{
 	width: 360px;
 	height: 60px;
 	border-radius: 9px;
@@ -163,17 +213,23 @@ margin-top: 9px</string>
 	margin-bottom: 16px;
 	margin-left: 56%;
 }
-#building_124:hover {
+#shamir:hover {
 	background-color: #F8F8FF;
 }</string>
       </property>
       <property name="text">
-       <string>בניין 124 / Building 124</string>
+       <string>שמיר</string>
       </property>
      </widget>
     </item>
-    <item row="5" column="0" alignment="Qt::AlignBottom">
+    <item row="22" column="0">
      <widget class="QPushButton" name="back_button">
+      <property name="maximumSize">
+       <size>
+        <width>172</width>
+        <height>16777215</height>
+       </size>
+      </property>
       <property name="font">
        <font>
         <pointsize>12</pointsize>
@@ -197,8 +253,376 @@ margin-top: 9px</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="1">
-     <spacer name="verticalSpacer">
+    <item row="9" column="4">
+     <widget class="QPushButton" name="aliza">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">#aliza{
+	width: 360px;
+	height: 60px;
+	border-radius: 9px;
+	background-color: 'white';
+	margin-bottom: 16px;
+	margin-left: 56%;
+}
+#aliza:hover {
+	background-color: #F8F8FF;
+}</string>
+      </property>
+      <property name="text">
+       <string>עליזה בגין</string>
+      </property>
+     </widget>
+    </item>
+    <item row="10" column="4">
+     <widget class="QPushButton" name="cahanov">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">#cahanov{
+	width: 360px;
+	height: 60px;
+	border-radius: 9px;
+	background-color: 'white';
+	margin-bottom: 16px;
+	margin-left: 56%;
+}
+#cahanov:hover {
+	background-color: #F8F8FF;
+}</string>
+      </property>
+      <property name="text">
+       <string>כהנוב: נשים, יולדות וילודים</string>
+      </property>
+     </widget>
+    </item>
+    <item row="11" column="4">
+     <widget class="QPushButton" name="oncology">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">#oncology{
+	width: 360px;
+	height: 60px;
+	border-radius: 9px;
+	background-color: 'white';
+	margin-bottom: 16px;
+	margin-left: 56%;
+}
+#oncology:hover {
+	background-color: #F8F8FF;
+}</string>
+      </property>
+      <property name="text">
+       <string>אונקולוגיה</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="8" colspan="2">
+     <widget class="QLabel" name="label_2">
+      <property name="minimumSize">
+       <size>
+        <width>260</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>260</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">width: 260px;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="title">
+      <property name="font">
+       <font>
+        <family>Segoe Script</family>
+        <pointsize>16</pointsize>
+        <italic>false</italic>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">margin-left: 16%</string>
+      </property>
+      <property name="text">
+       <string>SeeComm</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2" colspan="5">
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>413</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="8" column="0">
+     <spacer name="horizontalSpacer_5">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="9" column="0">
+     <spacer name="horizontalSpacer_6">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="4" column="9">
+     <spacer name="horizontalSpacer_10">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="9" column="9">
+     <spacer name="horizontalSpacer_14">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="7" column="9">
+     <spacer name="horizontalSpacer_12">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="12" column="9">
+     <spacer name="horizontalSpacer_17">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="4" column="0">
+     <spacer name="horizontalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="8" column="4">
+     <widget class="QPushButton" name="malrad">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">#malrad{
+	width: 360px;
+	height: 60px;
+	border-radius: 9px;
+	background-color: 'white';
+	margin-bottom: 16px;
+	margin-left: 56%;
+}
+#malrad:hover {
+	background-color: #F8F8FF;
+}</string>
+      </property>
+      <property name="text">
+       <string>מלר&quot;ד</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="4">
+     <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">margin-left: 60px;
+margin-top: 9px</string>
+      </property>
+      <property name="text">
+       <string>Select your destination:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="10" column="0">
+     <spacer name="horizontalSpacer_7">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="11" column="0">
+     <spacer name="horizontalSpacer_8">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="10" column="9">
+     <spacer name="horizontalSpacer_15">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="11" column="9">
+     <spacer name="horizontalSpacer_16">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="8" column="9">
+     <spacer name="horizontalSpacer_13">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="18" column="2" rowspan="5" colspan="5">
+     <spacer name="verticalSpacer_2">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
       </property>
@@ -217,7 +641,7 @@ margin-top: 9px</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>884</width>
+     <width>912</width>
      <height>26</height>
     </rect>
    </property>

@@ -11,6 +11,7 @@ import tkinter
 import tkinter.scrolledtext
 from tkinter import simpledialog
 import network
+import location_mapping
 
 HOST = network.local_ip
 
@@ -27,7 +28,7 @@ class landingPage(QMainWindow):
         # send notification to the workers
         try:
             print("here")
-            patient = notify.notifier(HOST, 55555)
+            patient = notify.notifier("localhost", 55555)
             patient.notify()
             patient.close()
             create_waiting_widget = chatWaitingWidget()
@@ -91,10 +92,11 @@ class staffPage(QMainWindow):
         super(staffPage, self).__init__()
         uic.loadUi("./UI/staff_page.ui", self)
         try:
-            self.worker = notify.notified(HOST, 55555)
+            self.worker = notify.notified("localhost", 55555)
             self.worker.start()
         except:
             print("notify error")
+        self.patient_waiting_number.setText(str(self.worker.notification_flag))
         self.answer.setEnabled(False)
         self.timer = QTimer()
         self.timer.timeout.connect(self.updateChatRequest)
@@ -115,7 +117,7 @@ class staffPage(QMainWindow):
             self.answer.setEnabled(False)
             self.worker.notification_flag = 0
             self.patient_waiting_number.setText(str(self.worker.notification_flag))
-            worker = notify.notifier(HOST, 12348)
+            worker = notify.notifier("localhost", 12348)
             worker.notify()
             worker.close()
             ChatPage(HOST, 9090, 'stuff_member')
@@ -156,7 +158,7 @@ class chatWaitingWidget(QWidget):
         self.name = name
         self.id = id
         self.info = [name, id, phone_number, appointment_type, date]
-        self.patient = notify.notified(HOST, 12348)
+        self.patient = notify.notified("localhost", 12348)
         self.patient.start()
         self.timer = QTimer()
         self.timer.timeout.connect(self.updateLabel)
@@ -266,13 +268,13 @@ class informationPage(QMainWindow):
     def __init__(self):
         super(informationPage, self).__init__()
         uic.loadUi("./UI/information_page.ui", self)
-        self.map_button.clicked.connect(self.map_page_function)
+        self.map_button.clicked.connect(self.location_selection_page_function)
         self.appointments_button.clicked.connect(self.appointments_page_function)
         self.back_button.clicked.connect(self.back_function)
 
-    def map_page_function(self):
-        create_buildings_page = buildingsPage()
-        widget.addWidget(create_buildings_page)
+    def location_selection_page_function(self):
+        create_location_selection_page = location_selection_Page()
+        widget.addWidget(create_location_selection_page)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
     def appointments_page_function(self):
@@ -283,22 +285,112 @@ class informationPage(QMainWindow):
     def back_function(self):
         widget.removeWidget(widget.currentWidget())
 
-class buildingsPage(QMainWindow):
+class location_selection_Page(QMainWindow):
     def __init__(self):
+        super(location_selection_Page, self).__init__()
+        uic.loadUi("./UI/location_selection.ui", self)
+        self.back_button.clicked.connect(self.back_function)
+        self.operations.clicked.connect(self.operations_function)
+        self.labs.clicked.connect(self.labs_function)
+        self.shamir.clicked.connect(self.shamir_function)
+        self.aliza.clicked.connect(self.aliza_function)
+        self.cahanov.clicked.connect(self.cahanov_function)
+        self.oncology.clicked.connect(self.oncology_function)
+        self.mall.clicked.connect(self.mall_function)
+
+    def back_function(self):
+        widget.removeWidget(widget.currentWidget())
+
+    def operations_function(self):
+        create_buildings_page = buildingsPage("operations")
+        widget.addWidget(create_buildings_page)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+    def labs_function(self):
+        create_buildings_page = buildingsPage("labs")
+        widget.addWidget(create_buildings_page)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+    def shamir_function(self):
+        create_buildings_page = buildingsPage("shamir")
+        widget.addWidget(create_buildings_page)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+    def aliza_function(self):
+        create_buildings_page = buildingsPage("aliza")
+        widget.addWidget(create_buildings_page)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+    def cahanov_function(self):
+        create_buildings_page = buildingsPage("cahanov")
+        widget.addWidget(create_buildings_page)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+    def oncology_function(self):
+        create_buildings_page = buildingsPage("oncology")
+        widget.addWidget(create_buildings_page)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+    def mall_function(self):
+        create_buildings_page = buildingsPage("mall")
+        widget.addWidget(create_buildings_page)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+class buildingsPage(QMainWindow):
+    def __init__(self, current_location):
         super(buildingsPage, self).__init__()
         uic.loadUi("./UI/buildings_page.ui", self)
+        self.current_location = current_location
         self.back_button.clicked.connect(self.back_function)
-        self.building_124.clicked.connect(self.building_124_function)
-        self.building_126.clicked.connect(self.building_126_function)
+        button_variable = getattr(self, current_location)
+        button_variable.setEnabled(False)  # Disables the button
+        self.operations.clicked.connect(self.operations_function)
+        self.labs.clicked.connect(self.labs_function)
+        self.shamir.clicked.connect(self.shamir_function)
+        self.malrad.clicked.connect(self.malrad_function)
+        self.aliza.clicked.connect(self.aliza_function)
+        self.cahanov.clicked.connect(self.cahanov_function)
+        self.oncology.clicked.connect(self.oncology_function)
+        self.mall.clicked.connect(self.mall_function)
 
 
-    def building_124_function(self):
-        create_map_page = mapPage("./more/building124.png", "<b>Building 124</b>", "<b>Departments</b><br><br>אף אוזן גרון<br>כירוגיה פלסטית<br>'אורתופדיה א' + ב<br>נוירולוגיה<br>האף הדנטלי / מרפאת שיניים")
+    def map_selection(self, current_location, destination):
+        navigation = current_location + "_" + destination
+        mapping = location_mapping.my_dict
+        print(navigation)
+        print(mapping)
+        print(mapping[navigation])
+        return mapping[navigation]
+    def shamir_function(self):
+        create_map_page = mapPage(self.map_selection(self.current_location, "shamir"), "<b>Building 124</b>", "<b>Departments</b><br><br>אף אוזן גרון<br>כירוגיה פלסטית<br>'אורתופדיה א' + ב<br>נוירולוגיה<br>האף הדנטלי / מרפאת שיניים")
         widget.addWidget(create_map_page)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
-    def building_126_function(self):
-        create_map_page = mapPage("./more/building126.png", "<b>Building 126</>", "<b>Departments</b><br><br>דימות<br>מכונים ומעבדות<br>גנטיקה<br>המטולוגיה")
+    def malrad_function(self):
+        create_map_page = mapPage(self.map_selection(self.current_location, "malrad"), "<b>Building 122</b>", "<b>Departments</b><br><br>")
+        widget.addWidget(create_map_page)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def labs_function(self):
+        create_map_page = mapPage(self.map_selection(self.current_location, "labs"), "<b>Building 126</>", "<b>Departments</b><br><br>דימות<br>מכונים ומעבדות<br>גנטיקה<br>המטולוגיה")
+        widget.addWidget(create_map_page)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def operations_function(self):
+        create_map_page = mapPage(self.map_selection(self.current_location, "operations"), "<b>Building 125</>", "<b>Departments</b><br><br>")
+        widget.addWidget(create_map_page)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def aliza_function(self):
+        create_map_page = mapPage(self.map_selection(self.current_location, "aliza"), "<b>Building 123</>", "<b>Departments</b><br><br>")
+        widget.addWidget(create_map_page)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def cahanov_function(self):
+        create_map_page = mapPage(self.map_selection(self.current_location, "cahanov"), "<b>Building 121</>", "<b>Departments</b><br><br>נשים<br>יולדות וילודים")
+        widget.addWidget(create_map_page)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def oncology_function(self):
+        create_map_page = mapPage(self.map_selection(self.current_location, "oncology"), "<b>Building 130</>", "<b>Departments</b><br><br>")
+        widget.addWidget(create_map_page)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def mall_function(self):
+        create_map_page = mapPage(self.map_selection(self.current_location, "mall"), "<b>Building 100</>", "<b>Departments</b><br><br>")
         widget.addWidget(create_map_page)
         widget.setCurrentIndex(widget.currentIndex() + 1)
     def back_function(self):
@@ -340,7 +432,7 @@ class appointmentsPage(QMainWindow):
         date = self.date.date().toString("dd.MM.yyyy")
         print(date)
         try:
-            patient = notify.notifier(HOST, 55555)
+            patient = notify.notifier("localhost", 55555)
             patient.notify()
             patient.close()
             create_waiting_widget = chatWaitingWidget(name, id, phone_number, appointment_type, date)
