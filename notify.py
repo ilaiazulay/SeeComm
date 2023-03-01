@@ -6,7 +6,7 @@ class notifier:
         self.host = host
         self.port = port
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.client.connect((self.host, self.port))
+        self.client.connect(("localhost", self.port))
 
     def notify(self):
         self.client.send("Patient needs assistance!".encode())
@@ -20,7 +20,7 @@ class notified:
         self.host = host
         self.port = port
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.server.bind((self.host, self.port))
+        self.server.bind(("localhost", self.port))
         self.server.listen()
         self.notification_flag = 0
 
@@ -44,16 +44,16 @@ class notified:
         self.server.close()
 
 if __name__ == "__main__":
-    worker = notified("localhost", 55555)
+    worker = notified("192.168.1.41", 55555)
     worker.start()
 
     # Patient can notify the workers by creating an instance of the Patient class
     # and calling the notify_workers method
-    patient = notifier("localhost", 55555)
+    patient = notifier("192.168.1.41", 55555)
     patient.notify()
     patient.close()
 
-    patient = notifier("localhost", 55555)
+    patient = notifier("192.168.1.41", 55555)
     patient.notify()
     patient.close()
 
