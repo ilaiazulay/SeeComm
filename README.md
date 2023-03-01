@@ -8,6 +8,7 @@ operations and communication more accessible in the hospitals using information 
 2. [x] List of departments in each building
 3. [x] Make an appointment
 4. [x] Chat with a stuff member
+
 The system contains all the data in the files and the server runs on the local network so that only computers conncected to the same network can communicate for security reasons.
 
  > **Before you start**
